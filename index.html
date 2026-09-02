@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Telegram Client - Скачать</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            padding: 16px;
+            padding-top: max(16px, env(safe-area-inset-top));
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
+            padding-left: max(16px, env(safe-area-inset-left));
+            padding-right: max(16px, env(safe-area-inset-right));
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: calc(100dvh - 32px);
+            max-height: calc(100vh - 32px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            margin: auto;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        
+        .container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .container::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 2px;
+        }
+        
+        .logo {
+            width: 72px;
+            height: 72px;
+            margin: 16px auto 16px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0088cc 0%, #00aaff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .logo svg {
+            width: 48px;
+            height: 48px;
+            fill: white;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: clamp(22px, 5vw, 28px);
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 24px;
+            font-size: clamp(13px, 3.5vw, 15px);
+            line-height: 1.5;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 20px 0;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .features li {
+            list-style: none;
+            padding: 6px 0;
+            color: #555;
+            font-size: clamp(13px, 3.5vw, 15px);
+            line-height: 1.5;
+        }
+        
+        .features li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            text-decoration: none;
+            padding: 14px 48px;
+            border-radius: 30px;
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: bold;
+            margin: 8px 0 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .download-btn:active {
+            transform: scale(0.96);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+        
+        /* ========== iOS 提示条 ========== */
+        .ios-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0 auto 12px;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            border: 1px solid #c7d2fe;
+            border-radius: 20px;
+            font-size: clamp(12px, 3.2vw, 13px);
+            color: #4f46e5;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            max-width: 90%;
+        }
+        
+        .ios-hint:active {
+            transform: scale(0.98);
+            background: linear-gradient(135deg, #e0e7ff 0%, #d8e0ff 100%);
+        }
+        
+        .ios-hint svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            color: #4f46e5;
+        }
+        
+        .ios-hint .arrow {
+            margin-left: 2px;
+            font-size: 11px;
+            color: #6366f1;
+        }
+        
+        .version {
+            color: #999;
+            font-size: clamp(12px, 3vw, 14px);
+            margin-top: 4px;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 375px) {
+            body {
+                padding: 12px;
+            }
+            .container {
+                padding: 20px 16px;
+                border-radius: 16px;
+            }
+            .logo {
+                width: 64px;
+                height: 64px;
+            }
+            .logo svg {
+                width: 40px;
+                height: 40px;
+            }
+            .features {
+                padding: 12px;
+                margin: 16px 0;
+            }
+            .ios-hint {
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
+                gap: 20px;
+                padding: 16px;
+            }
+            .logo {
+                margin: 0;
+                flex-shrink: 0;
+            }
+            .content-wrapper {
+                flex: 1;
+            }
+            .features {
+                margin: 12px 0;
+            }
+            .ios-hint {
+                margin: 0 0 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+            </svg>
+        </div>
+        
+        <div class="content-wrapper">
+            <h1>Telegram Client</h1>
+            <p class="subtitle">Встроенная оптимизация MTProto, готов к использованию.</p>
+            
+            <ul class="features">
+                <li>Без дополнительной настройки, установи и используй.</li>
+                <li>Полный русский интерфейс.</li>
+                <li>Работает в условиях блокировок.</li>
+            </ul>
+            
+            <a href="https://github.com/tgclient/tg-client-ru/releases/download/v12.5.1-ru/android.apk" class="download-btn">Скачать</a>
+            
+            <!-- iOS 用户提示 -->
+            <div class="ios-hint" onclick="window.open('https://t.me/tgclient_support','_blank')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+                <span>iOS — напишите в поддержку</span>
+                <span class="arrow">›</span>
+            </div>
+            
+            <p class="version">Версия v12.5.1 | Android</p>
+        </div>
+    </div>
+</body>
+</html>
